@@ -1,0 +1,4 @@
+{{ post.title }}
+{{ post.image.url }}
+{{ post.descriptions }} 
+{{ post_url }} 

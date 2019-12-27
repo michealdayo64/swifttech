@@ -1,0 +1,227 @@
+<!--<?php include ("headcontent.php"); ?>-->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<title>Virtual Intelligent Solutions (VIS)</title>
+</head>
+
+
+<!--<?php include ("header.php"); ?>-->
+
+
+  <!-- Start Bottom Header -->
+  <div class="header-bg page-area">
+    <div class="home-overly"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="slider-content text-center">
+            <div class="header-bottom">
+              <div class="layer2 wow zoomInUp" data-wow-duration="2s" data-wow-delay=".4s">
+                <h1 class="title2">Educational posts</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END Header -->
+  <div id="blog" class="blog-area">
+    <div class="blog-inner area-padding">
+      <div class="blog-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Latest Educational News</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <!-- LOOP STARTS HERE -->
+  {% for post in educationpost %}
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            
+            <div class="single-blog">
+              <div class="single-blog-img">
+                <a href="{{ post.get_absolute_url }}">
+										<img src="{{ post.image.url }}" alt="">
+									</a>
+              </div>
+              <div class="blog-meta">
+                  
+                  <span class="avatar">
+                      Posted By:{{ post.author }} <img src="{{ post.authur.profile_pic.url }}" alt="..." class="img-fluid" style="height: 25px; width: 25px;">
+                  </span>
+                <span class="comments-type">
+										<i class="fa fa-comment-o"></i>
+										<a href="#">{{ post.comments.count }}</a>
+									</span>
+                <span class="date-type">
+										<i class="fa fa-calendar"></i>{{ post.publish | timesince }}
+									</span>
+              </div>
+              <div class="blog-text">
+                <h4>
+                    <a href="tech.html">{{ post.title }}</a>
+									</h4>
+                <p>
+                  {{ post.descriptions|safe|truncatewords:"30"|linebreaks }}
+                </p>
+              </div>
+              <span>
+									<a href="{{ post.get_absolute_url }}" class="ready-btn">Read more</a>
+								</span>
+            </div>
+            <!-- Start single blog -->
+            
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="product" class="blog-area">
+    <div class="blog-inner area-padding">
+      <div class="blog-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Latest Products</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+  {% for product in latest_product %}
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="single-blog">
+              <div class="single-blog-img">
+                <a href="{{ product.get_absolute_url }}">
+										<img src="{{ product.image.url }}" alt="">
+									</a>
+              </div>
+              <div class="blog-meta">
+                <span class="comments-type">
+										<i class="fa fa-comment-o"></i>
+										<a href="#">{{ product.comments.count }}</a>
+									</span>
+                <span class="date-type">
+										<i class="fa fa-calendar"></i>{{ product.publish }}
+									</span>
+              </div>
+              <div class="blog-text">
+                <h4>
+                                        <a href="tech.html">{{ product.title }}</a>
+									</h4>
+                <p>
+                  {{ product.descriptions|safe|truncatewords:"30"|linebreaks }}
+                </p>
+              </div>
+              <span>
+									<a href="{{ product.get_absolute_url }}" class="ready-btn">Read more</a>
+								</span>
+            </div>
+            <!-- Start single blog -->
+
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="contact" class="contact-area">
+    <div class="contact-inner area-padding">
+      <div class="contact-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Contact us</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-mobile"></i>
+                <p>
+                  Call: +1 5589 55488 55<br>
+                  <span>Monday-Friday (9am-5pm)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-envelope-o"></i>
+                <p>
+                  Email: info@example.com<br>
+                  <span>Web: www.example.com</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-map-marker"></i>
+                <p>
+                  Location: A108 Adam Street<br>
+                  <span>NY 535022, USA</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <!-- Start  contact -->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form contact-form">
+              <!--<div id="sendmessage">Your message has been sent. Thank you!</div>
+              <div id="errormessage"></div>-->
+              <form action="" method="post" role="form">{% csrf_token %}
+                <!--<div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" name="email_from" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>-->
+                {{ form.as_p }}
+                <div class="text-center"><button type="submit">Send Message</button></div>
+              </form>
+            </div>
+          </div>
+          
+          <!-- End Left contact -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- End Blog Area -->
+
+  <div class="clearfix"></div>
+{% endblock %}
+  <!--<?php include("footer.php") ?>-->

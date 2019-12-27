@@ -1,0 +1,358 @@
+<!--<?php include ("headcontent.html"); ?>-->
+{% extends 'base.html '%}
+
+{% block content %}
+{% include 'blog/slider.html' %}
+<div data-spy="scroll" data-target="#navbar-example"></div>
+
+  <div id="preloader"></div>
+
+  <!-- Start Service area -->
+  <div id="services" class="services-area area-padding">
+    <div class="container">
+      {% if messages %}
+{% for message in messages %}
+  <div class="alert alert-warning alert-dismissable" role="alert">
+    <button class="close" data-dismiss="alert">
+      <small><sup>x</sup></small>
+    </button>
+    {{message}}
+  </div>
+{% endfor %}
+{% endif %}
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="section-headline services-head text-center">
+            <h2>What we offer</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="services-contents">
+          <!-- Start Left services --> 
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="#">
+											<i class="fa fa-shopping-cart"></i>
+										</a>
+                  <h4>Advice on products</h4>
+                  <p>
+                   We help you check products, search on it, test it and tell you the one that best fit your needs and why we choose it for you.
+                  </p>
+                </div>
+              </div>
+               <!-- end about-details  -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="{% url 'single-tech' %}">
+											<i class="fa fa-laptop"></i>
+										</a>
+                  <h4>Tech News</h4>
+                  <p>
+                    We provide you with the lastest and trending news in technology. So that you can stay updated all time.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            
+            <div class=" about-move">
+              <div class="services-details">
+                <div class="single-services">
+                  <a class="services-icon" href="{% url 'education' %}">
+											<i class="fa fa-book"></i>
+										</a>
+                  <h4>Educational Tips</h4>
+                  <p>
+                    We offer tips you can use to have good grades, understand your courses and pass excellently.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+   
+       
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    
+  <!-- End Service area -->
+<hr class="style-seven" >
+
+  <div id="blog" class="blog-area">
+    <div class="blog-inner area-padding">
+      <div class="blog-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Latest News</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <!-- LOOP STARTS HERE -->
+          {% for post in query %}
+          <div class="col-md-4 col-sm-4 col-xs-6">
+            
+            <div class="single-blog">
+              <div class="single-blog-img">
+                <a href="{{ post.get_absolute_url }}">
+										<img src="{{ post.image.url }}" alt="">
+									</a>
+              </div>
+              <div class="blog-meta">
+                  
+                  <span class="avatar">
+                      Posted By:{{ post.author }} <img src="{{ post.author.profile_pic.url }}" alt="..." class="rounded" style="height: 25px; width: 25px;">
+                  </span>
+                <span class="comments-type">
+										<i class="fa fa-comment-o"></i>
+										<a href="#">{{ post.comments.count }}</a>
+									</span>
+                <span class="date-type">
+										<i class="fa fa-calendar"></i>{{ post.publish|timesince }} Ago
+									</span>
+              </div>
+              <div class="blog-text">
+                <h4>
+                    <a href="tech.html">{{ post.title }}</a>
+									</h4>
+                <p>
+                  {{ post.descriptions|safe|truncatewords:"30"|linebreaks }}
+                </p>
+              </div>
+              <span>
+									<a href="{{ post.get_absolute_url }}" class="ready-btn">Read more</a>
+								</span>
+            </div>
+            <!-- Start single blog -->
+            
+          </div>
+          {% endfor %}
+          
+          <!-- LOOP TILL HERE-->
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="blog-pagination" style="text-align: center;">
+    <ul class="pagination">
+      {% if query.has_previous %}
+      <li><a href="?{{ page_request_var }}={{ query.previous_page_number }}">&lt;</a></li>
+      {% endif %}
+      <li class="active"><a href="?{{ page_request_var }}={{ query.number }}">{{ query.number }} of {{ query.paginator.num_pages }}</a></li>
+      {% if query.has_next %}
+      <li><a href="?{{ page_request_var }}={{ query.next_page_number }}">&gt;</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  <!-- Start Wellcome Area -->
+  <div class="wellcome-area">
+    <div class="well-bg">
+      <div class="test-overly"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="wellcome-text">
+              <div class="well-text text-center">
+                <h2>Welcome To VIS</h2>
+                <p>
+                  By subscribing to our newsletter below we would be sending you updates on every articles we publish.
+                </p>
+                
+                <div class="subs-feilds">
+                  <div class="suscribe-input">
+                      <form action="." method="POST">
+                          {% csrf_token %}
+                    <input type="email" class="email form-control width-80" name="email" id="sus_email" placeholder="Email">
+                    <button type="submit" id="sus_submit" class="add-btn width-20">Subscribe</button>
+                    <div id="msg_Submit" class="h3 text-center hidden"></div>
+                  </form>
+                  </div>
+                </div>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Wellcome Area -->
+
+  <div id="product" class="blog-area">
+    <div class="blog-inner area-padding">
+      <div class="blog-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Latest Products</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <!-- LOOP STARTS HERE -->
+          {% for product in latest_product %}
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="single-blog">
+              <div class="single-blog-img">
+                <a href="{{ product.get_absolute_url }}">
+										<img src="{{ product.image.url }}" alt="">
+									</a>
+              </div>
+              <div class="blog-meta">
+                <span class="comments-type">
+										<i class="fa fa-comment-o"></i>
+										<a href="#">{{ product.comments.count }}</a>
+									</span>
+                <span class="date-type">
+										<i class="fa fa-calendar"></i>{{ product.publish }}
+									</span>
+              </div>
+              <div class="blog-text">
+                <h4>
+                                        <a href="tech.html">{{ product.title }}</a>
+									</h4>
+                <p>
+                  {{ product.descriptions|safe|truncatewords:"30"|linebreaks }}
+                </p>
+              </div>
+              <span>
+									<a href="{{ product.get_absolute_url }}" class="ready-btn">Read more</a>
+								</span>
+            </div>
+            <!-- Start single blog -->
+
+          </div>
+          {% endfor %}
+          <!-- LOOP TILL HERE-->
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+
+
+  <div class="suscribe-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs=12">
+          <div class="suscribe-text text-center">
+            <h3>Educational tips: Get the best of you out</h3>
+            <a class="sus-btn" href="{% url 'education' %}">View All</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Suscrive Area -->
+  <!-- Start contact Area -->
+  <div id="contact" class="contact-area">
+    <div class="contact-inner area-padding">
+      <div class="contact-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Contact us</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-mobile"></i>
+                <p>
+                  Call: +1 5589 55488 55<br>
+                  <span>Monday-Friday (9am-5pm)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-envelope-o"></i>
+                <p>
+                  Email: info@example.com<br>
+                  <span>Web: www.example.com</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-map-marker"></i>
+                <p>
+                  Location: A108 Adam Street<br>
+                  <span>NY 535022, USA</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <!-- Start  contact -->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form contact-form">
+              <!--<div id="sendmessage">Your message has been sent. Thank you!</div>
+              <div id="errormessage"></div>-->
+              <form action="" method="post" role="form">{% csrf_token %}
+                <!--<div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" name="email_from" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>-->
+                {{ form.as_p }}
+                <div class="text-center"><button type="submit">Send Message</button></div>
+              </form>
+            </div>
+          </div>
+          
+          <!-- End Left contact -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+  <!-- End Contact Area -->
+
+ <!--<?php include ("footer.html") ?>-->

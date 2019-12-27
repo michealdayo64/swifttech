@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<title>Virtual Intelligent Solutions (VIS)</title>
+</head>
+
+
+
+
+
+  <!-- Start Bottom Header -->
+  <div class="header-bg page-area">
+    <div class="home-overly"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="slider-content text-center">
+            <div class="header-bottom">
+              <div class="layer2 wow zoomInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                {}
+                <h1 class="title2">{{ postdetail.title }}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END Header -->
+  <div class="blog-page area-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <div class="page-head-blog">
+            <div class="single-blog-page">
+            </div>
+            <div class="single-blog-page">
+            <div class="single-blog-page">
+              <!-- recent start -->
+              <div class="left-blog">
+                <h4>recent post</h4>
+                <div class="recent-post">
+        
+                  <!-- START LOOP HERE -->
+                  {% for recent in recent_post %}
+                  <div class="recent-single-post">
+                    <div class="post-img">
+                      <a href="#">
+												   <img src="{{ recent.image.url }}" alt="">
+												</a>
+                    </div>
+                    <div class="pst-content">
+                      <p><a href="#"> {{ recent.descriptions|safe|truncatewords:"20"|linebreaks }}</a></p>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  <!-- END LOOP HERE -->
+                </div>
+              </div>
+              <!-- recent end -->
+
+            </div>
+
+
+            <div class="single-blog-page">
+              <!-- recent start -->
+              <div class="left-blog">
+                <h4>Popular post</h4>
+                <div class="recent-post">
+        
+                  <!-- START LOOP HERE -->
+                  <div class="recent-single-post">
+                    <div class="post-img">
+                      <a href="#">
+												   <img src="{% static 'img/blog/4.jpg' %}" alt="">
+												</a>
+                    </div>
+                    <div class="pst-content">
+                      <p><a href="#"> Redug Lerse dolor sit amet consect adipis elit.</a></p>
+                    </div>
+                  </div>
+                  <!-- END LOOP HERE -->
+                </div>
+              </div>
+              <!-- recent end -->
+</div>
+              </div>
+          </div>
+        </div>
+        <!-- End left sidebar -->
+        <!-- Start single blog -->
+        <div class="col-md-8 col-sm-8 col-xs-12">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <!-- single-blog start -->
+              <article class="blog-post-wrapper">
+                <div class="post-thumbnail">
+                  <img src="{{ postdetail.image.url }}" alt="" />
+                </div>
+                <div class="post-information">
+                  <h2>{{ postdetail.title }}</h2>
+                  <div class="entry-meta">
+                    <span class="author-meta"><i class="fa fa-user"></i> <a href="#">Poster name: {{ postdetail.author }}</a></span>
+                    <span><i class="fa fa-clock-o"></i>{{ postdetail.publish }}</span>
+                 
+                
+                    <span><i class="fa fa-comments-o"></i> <a href="#">{{ comments.count }} comment{{ comments|pluralize }} </a></span>
+                  </div>
+                  <div class="entry-content">
+                    <p>{{ postdetail.descriptions }}</p>
+                    <!--<blockquote>
+                      <p>Quisque semper nunc vitae erat pellentesque, ac placerat arcu consectetur. In venenatis elit ac ultrices convallis. Duis est nisi, tincidunt ac urna sed, cursus blandit lectus. In ullamcorper sit amet ligula ut eleifend. Proin dictum
+                        tempor ligula, ac feugiat metus. Sed finibus tortor eu scelerisque scelerisque.</p>
+                    </blockquote>-->
+                    <!--<p>Aenean et tempor eros, vitae sollicitudin velit. Etiam varius enim nec quam tempor, sed efficitur ex ultrices. Phasellus pretium est vel dui vestibulum condimentum. Aenean nec suscipit nibh. Phasellus nec lacus id arcu facilisis elementum.
+                      Curabitur lobortis, elit ut elementum congue, erat ex bibendum odio, nec iaculis lacus sem non lorem. Duis suscipit metus ante, sed convallis quam posuere quis. Ut tincidunt eleifend odio, ac fringilla mi vehicula nec. Nunc vitae
+                      lacus eget lectus imperdiet tempus sed in dui. Nam molestie magna at risus consectetur, placerat suscipit justo dignissim. Sed vitae fringilla enim, nec ullamcorper arcu.</p>-->
+                  </div>
+                </div>
+              </article>
+              <div class="clear"></div>
+              <div class="single-post-comments">
+                <div class="comments-area">
+                  <div class="comments-heading">
+                    <h3>{{ comments.count }} comment{{ comments|pluralize }}</h3>
+                  </div>
+                  <div class="comments-list">
+                    <ul>
+                
+                      <li>
+                        {% for comment in comments %}
+                        <div class="comments-details">
+                          <div class="comments-list-img">
+                            <img src="{% static 'img/blog/b02.jpg' %}" alt="post-author">
+                          </div>
+                          <div class="comments-content-wrap">
+                            <span>
+																<b>Comment By:{{ comment.name }}</b>
+																Posted
+																<span class="post-time">{{ comment.created|timesince }} Ago</span>
+                             
+                            </span>
+                            <p>{{ comment.message }}</p>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </li>
+                
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="comment-respond">
+                  <h3 class="comment-reply-title">Leave a Reply </h3>
+                  <span class="email-notes">Your email address will not be published. Required fields are marked *</span>
+                  <form method="POST">{% csrf_token %}
+                    <div class="row">
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <p>Name </p>
+                        <input type="text" name="name"/>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <p>Email </p>
+                        <input type="email" name="email"/>
+                      </div>
+                      <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <p>Website</p>
+                        <input type="text" />-->
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 comment-form-comment">
+                        <p>Message</p>
+                        <textarea id="message-box" cols="30" rows="10" name="message"></textarea>
+                        <input type="submit" value="Post Comment" />
+                      </div>
+                      </form>
+                    </div>
+                  
+                </div>
+              </div>
+              <!-- single-blog end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="product" class="blog-area">
+    <div class="blog-inner area-padding">
+      <div class="blog-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Latest Products</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+  {% for product in latest_product %}
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="single-blog">
+              <div class="single-blog-img">
+                <a href="{{ product.get_absolute_url }}">
+										<img src="{{ product.image.url }}" alt="">
+									</a>
+              </div>
+              <div class="blog-meta">
+                <span class="comments-type">
+										<i class="fa fa-comment-o"></i>
+										<a href="#">{{ product.comments.count }}</a>
+									</span>
+                <span class="date-type">
+										<i class="fa fa-calendar"></i>{{ product.publish }}
+									</span>
+              </div>
+              <div class="blog-text">
+                <h4>
+                                        <a href="tech.html">{{ product.title }}</a>
+									</h4>
+                <p>
+                  {{ product.descriptions|safe|truncatewords:"30"|linebreaks }}
+                </p>
+              </div>
+              <span>
+									<a href="{{ product.get_absolute_url }}" class="ready-btn">Read more</a>
+								</span>
+            </div>
+            <!-- Start single blog -->
+
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="contact" class="contact-area">
+    <div class="contact-inner area-padding">
+      <div class="contact-overly"></div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline text-center">
+              <h2>Contact us</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-mobile"></i>
+                <p>
+                  Call: +1 5589 55488 55<br>
+                  <span>Monday-Friday (9am-5pm)</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-envelope-o"></i>
+                <p>
+                  Email: info@example.com<br>
+                  <span>Web: www.example.com</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Start contact icon column -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="contact-icon text-center">
+              <div class="single-icon">
+                <i class="fa fa-map-marker"></i>
+                <p>
+                  Location: A108 Adam Street<br>
+                  <span>NY 535022, USA</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <!-- Start  contact -->
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form contact-form">
+              <!--<div id="sendmessage">Your message has been sent. Thank you!</div>
+              <div id="errormessage"></div>-->
+              <form action="" method="post" role="form">{% csrf_token %}
+                <!--<div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" name="email_from" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>-->
+                {{ form.as_p }}
+                <div class="text-center"><button type="submit">Send Message</button></div>
+              </form>
+            </div>
+          </div>
+          
+          <!-- End Left contact -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Blog Area -->
+  <div class="clearfix"></div>
+  {% endblock %}

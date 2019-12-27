@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <title>Document</title>
+    {% include 'blog/headcontent.html' %}
+<body>
+    
+    {% include 'blog/header.html' %}
+    
+    
+    {% block content%}
+
+    {% endblock %}
+
+    {% include 'blog/footer.html' %}
+</body>
+</html>
