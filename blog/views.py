@@ -18,23 +18,29 @@ def postblog(request):
     if request.method == 'POST':
         post_form = PostForm(request.POST, request.FILES)
         if post_form.is_valid():  
-            post = post_form.save()
-            print(post)
-            emails = Newletter.objects.filter()
+            post = post_form.save(commit=False)
+            if Post.objects.filter(slug=post.slug).exists():
+                messages.warning(request, "This post already exist")
+                return redirect('post_blog')
+            else:
+                post.save()
+                messages.success(request, "Post was successful")
+                print(post)
+                emails = Newletter.objects.filter()
             # post = Post.objects.filter(id=post_form.id)
-            post_url = request.build_absolute_uri(post.get_absolute_url())
-            subject = "Welcome to Swifttech Where we give You the latest Tech and Educational news"
+                post_url = request.build_absolute_uri(post.get_absolute_url())
+                subject = "Welcome to Swifttech Where we give You the latest Tech and Educational news"
             #message = f'{post.title}\n\n.{post.image.url} {post.descriptions[:40]}\n{post_url}'
             #send_mail(subject, message, 'omotoshomicheal93@gmail.com', [ user.email for user in emails ])
-            with open(settings.BASE_DIR + "/blog/templates/blog/postform_email.txt") as f:
-                postblog = f.read()
-            message = EmailMultiAlternatives(subject=subject, body=postblog, from_email='omotoshomicheal93@gmail.com', to=[ user.email for user in emails ])
-            html_template = get_template("blog/postform_email.html").render({'post' : post, 'post_url':post_url})
-            message.attach_alternative(html_template, 'text/html')
-            message.send()
-            print(message.send())
+                with open(settings.BASE_DIR + "/blog/templates/blog/postform_email.txt") as f:
+                    postblog = f.read()
+                message = EmailMultiAlternatives(subject=subject, body=postblog, from_email='omotoshomicheal93@gmail.com', to=[ user.email for user in emails ])
+                html_template = get_template("blog/postform_email.html").render({'post' : post, 'post_url':post_url})
+                message.attach_alternative(html_template, 'text/html')
+                message.send()
+                print(message.send())
 
-            return redirect('post_blog')
+                return redirect('post_blog')
     else:
         post_form = PostForm()
     
@@ -78,13 +84,13 @@ def postView(request):
         if newsform.is_valid():
             instance = newsform.save(commit=False)
             if Newletter.objects.filter(email=instance.email).exists():
-                messages.warning(request, 'This email alreay exist')
+                messages.warning(request, 'This email already exist')
                 return redirect('posts')
             else:
                 instance.save()
-                messages.success(request, 'Subscription successful')
+                messages.success(request, 'Newsletter Subscription successful')
                 subject_message = 'NEWSLETTER SUBSCRIPTION'
-                message = 'Thank you for subscribing to our blog. We will Updating you will all of our blog posts'
+                message = 'Thank you for subscribing to our blog. We will be Updating you with all of our latest blog posts'
                 send_mail(subject_message, message, 'omotoshomicheal93@gmail.com', [instance.email])
                 return redirect('posts')
     else:
